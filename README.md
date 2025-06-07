@@ -129,3 +129,86 @@ Please feel free to:
 ---
 
 Happy AI-assisted developing!
+
+# Contextual Photo Search
+
+A CLI tool to search your Apple Photos library using natural language queries. This tool analyzes each photo with a visual LLM to generate a description, then allows you to search those descriptions to find photos.
+
+## Features
+
+-   **Natural Language Search:** Find photos with queries like "a day at the beach" instead of just dates or locations.
+-   **Automatic Indexing:** Automatically processes your Apple Photos library to generate descriptions.
+-   **CLI Interface:** A simple and scriptable command-line interface.
+-   **Local First:** All photo metadata and descriptions are stored locally on your machine.
+
+## Getting Started
+
+### Prerequisites
+
+-   Python 3.9+
+-   [uv](https://github.com/astral-sh/uv) (a fast Python package installer and resolver)
+-   Access to an Apple Photos library on macOS.
+-   Access to a Visual Language Model (VLLM) with an API endpoint.
+
+### Installation
+
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/your-username/contextual-photo-search.git
+    cd contextual-photo-search
+    ```
+
+2.  **Install dependencies using `uv`:**
+    This will create a virtual environment and install all the necessary packages.
+    ```bash
+    uv sync
+    ```
+
+### Configuration
+
+1.  **Create a `.env` file:**
+    Copy the example environment file to create your own configuration:
+    ```bash
+    cp .env.example .env
+    ```
+
+2.  **Edit the `.env` file:**
+    Open the `.env` file and add your VLLM's API key and endpoint URL.
+    ```
+    VLLM_API_KEY="your_api_key_here"
+    VLLM_API_ENDPOINT="https://your-vllm-api/invocations"
+    ```
+
+## Usage
+
+The application is run as a Python module.
+
+### Indexing Your Photos
+
+Before you can search, you need to index your photo library. This process will fetch each photo, send it to the VLLM for analysis, and store the description in a local database.
+
+```bash
+uv run python -m src.photo_search.main index
+```
+
+This may take a long time, especially on the first run, depending on the size of your library. A progress bar will be displayed.
+
+### Searching for Photos
+
+Once your library is indexed, you can search for photos using natural language.
+
+```bash
+uv run python -m src.photo_search.main search "your search query here"
+```
+
+**Examples:**
+
+```bash
+uv run python -m src.photo_search.main search "photos of my cat sleeping"
+```
+
+```bash
+uv run python -m src.photo_search.main search "sunsets over the mountains"
+```
+
+The search results will be displayed in a table in your terminal.
