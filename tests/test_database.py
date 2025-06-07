@@ -1,9 +1,9 @@
 """Unit tests for the Database class."""
 
 from pathlib import Path
-import pytest
-from sqlalchemy import create_engine, inspect
 
+import pytest
+from sqlalchemy import inspect
 from src.photo_search.database import Database
 from src.photo_search.photos_service import PhotoInfo
 
@@ -88,4 +88,4 @@ def test_search_photos(in_memory_db: Database):
     assert "/path/to/another_cat.jpg" in cat_results
     assert len(dog_results) == 1
     assert "/path/to/dog.jpg" in dog_results
-    assert len(non_existent_results) == 0 
+    assert len(non_existent_results) == 0

@@ -6,9 +6,9 @@ This module loads settings from environment variables and a .env file.
 import os
 from functools import lru_cache
 from pathlib import Path
-from typing import Optional
 
 from dotenv import load_dotenv
+
 
 # Load environment variables from a .env file located in the project root.
 # The project root is determined by looking for the pyproject.toml file.
@@ -16,7 +16,8 @@ def get_project_root() -> Path:
     """Find the project root by locating the 'pyproject.toml' file.
 
     Raises:
-        FileNotFoundError: If the 'pyproject.toml' file cannot be found in any parent directory.
+        FileNotFoundError: If 'pyproject.toml' is not found in parent directories.
+
     """
     current_path = Path.cwd()
     while current_path != current_path.parent:
@@ -58,8 +59,9 @@ def get_settings() -> Settings:
 
     Returns:
         The application settings object.
+
     """
     project_root = get_project_root()
     dotenv_path = project_root / ".env"
     load_dotenv(dotenv_path=dotenv_path)
-    return Settings() 
+    return Settings()

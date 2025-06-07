@@ -24,6 +24,7 @@ class PhotosService:
 
         Raises:
             FileNotFoundError: If the Photos database cannot be found.
+
         """
         try:
             self.photos_db = osxphotos.PhotosDB(dbfile=db_path)
@@ -36,7 +37,8 @@ class PhotosService:
 
         Returns:
             A list of PhotoInfo objects, each containing the UUID and path of a photo.
-            Returns an empty list if there are no photos or the photo path is not available.
+            Returns an empty list if there are no photos or the path is not available.
+
         """
         photo_infos: List[PhotoInfo] = []
         # photos() returns a list of PhotoInfo objects from osxphotos
@@ -44,4 +46,4 @@ class PhotosService:
             # Only include photos that have a path on the local disk
             if photo.path:
                 photo_infos.append(PhotoInfo(uuid=photo.uuid, path=photo.path))
-        return photo_infos 
+        return photo_infos

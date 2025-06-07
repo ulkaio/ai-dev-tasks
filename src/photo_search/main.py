@@ -1,11 +1,14 @@
-"""Main CLI application for the photo search tool."""
+"""Main CLI application for the photo search tool.
+
+This module provides the command-line interface for indexing and searching photos.
+"""
+
+from pathlib import Path
 
 import typer
 from rich.console import Console
 from rich.progress import track
 from rich.table import Table
-from pathlib import Path
-
 from src.photo_search.database import Database
 from src.photo_search.photos_service import PhotosService
 from src.photo_search.vllm_service import VLLMService
@@ -16,8 +19,7 @@ console = Console()
 
 @app.command()
 def index() -> None:
-    """
-    Index the photos in the Apple Photos library.
+    """Index the photos in the Apple Photos library.
 
     This command fetches all photos, generates descriptions for them using the VLLM,
     and stores the information in the database.
@@ -43,7 +45,10 @@ def index() -> None:
                     db.add_photo(photo, description)
                     console.print(f"Indexed photo [cyan]{photo.path}[/cyan].")
                 except Exception as e:
-                    console.print(f"Error processing photo {photo.path}: {e}", style="bold red")
+                    console.print(
+                        f"Error processing photo {photo.path}: {e}",
+                        style="bold red",
+                    )
 
     except FileNotFoundError:
         console.print("Could not find the Apple Photos library.", style="bold red")
@@ -55,11 +60,11 @@ def index() -> None:
 
 @app.command()
 def search(query: str) -> None:
-    """
-    Search for photos using a natural language query.
+    """Search for photos using a natural language query.
 
     Args:
         query: The search query.
+
     """
     console.print(f"Searching for photos matching: '[bold blue]{query}[/bold blue]'")
     db = Database()
@@ -78,5 +83,10 @@ def search(query: str) -> None:
     console.print(table)
 
 
+def main() -> None:
+    """Application entry point."""
+    app()
+
+
 if __name__ == "__main__":
-    app() 
+    main()

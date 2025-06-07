@@ -1,9 +1,9 @@
 """Unit tests for the PhotosService."""
 
-import pytest
 from unittest.mock import MagicMock, patch
 
-from src.photo_search.photos_service import PhotosService, PhotoInfo
+import pytest
+from src.photo_search.photos_service import PhotoInfo, PhotosService
 
 
 @patch("src.photo_search.photos_service.osxphotos.PhotosDB")
@@ -23,7 +23,11 @@ def test_get_photos_success(mock_photos_db_class):
     mock_photo_3_no_path.path = None
 
     mock_db_instance = MagicMock()
-    mock_db_instance.photos.return_value = [mock_photo_1, mock_photo_2, mock_photo_3_no_path]
+    mock_db_instance.photos.return_value = [
+        mock_photo_1,
+        mock_photo_2,
+        mock_photo_3_no_path,
+    ]
     mock_photos_db_class.return_value = mock_db_instance
 
     # Act
@@ -63,4 +67,4 @@ def test_photos_service_init_raises_file_not_found(mock_photos_db_class):
 
     # Act & Assert
     with pytest.raises(FileNotFoundError, match="DB not found"):
-        PhotosService() 
+        PhotosService()

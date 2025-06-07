@@ -5,7 +5,6 @@ from pathlib import Path
 
 import requests
 from requests.exceptions import RequestException
-
 from src.photo_search.config import get_settings
 
 
@@ -30,6 +29,7 @@ class VLLMService:
         Raises:
             IOError: If the image file cannot be read.
             RequestException: If the request to the VLLM fails.
+
         """
         if not self.api_endpoint:
             raise ValueError("VLLM API endpoint is not configured.")
@@ -48,9 +48,11 @@ class VLLMService:
         payload = {"instances": [{"image_bytes": {"b64": encoded_image}}]}
 
         try:
-            response = requests.post(self.api_endpoint, json=payload, headers=headers, timeout=30)
+            response = requests.post(
+                self.api_endpoint, json=payload, headers=headers, timeout=30
+            )
             response.raise_for_status()
-            # Assuming the response JSON has a 'predictions' field with a list of descriptions
+            # Assuming the response has a 'predictions' field
             return response.json()["predictions"][0]
         except RequestException as e:
-            raise RequestException(f"Failed to get description from VLLM: {e}") from e 
+            raise RequestException(f"Failed to get description from VLLM: {e}") from e

@@ -1,11 +1,10 @@
 """Unit tests for the VLLMService."""
 
 from pathlib import Path
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
 
 import pytest
 from requests.exceptions import RequestException
-
 from src.photo_search.vllm_service import VLLMService
 
 
@@ -29,7 +28,9 @@ def test_get_description_success(mock_get_settings):
 
         # Act
         with patch("builtins.open", MagicMock()):
-            with patch("base64.b64encode", return_value=b"encoded_string") as mock_b64encode:
+            with patch(
+                "base64.b64encode", return_value=b"encoded_string"
+            ) as mock_b64encode:
                 description = service.get_description(fake_image_path)
 
     # Assert
@@ -82,5 +83,7 @@ def test_get_description_request_exception(mock_get_settings):
         # Act & Assert
         with patch("builtins.open", MagicMock()):
             with patch("base64.b64encode", return_value=b"encoded_string"):
-                with pytest.raises(RequestException, match="Failed to get description from VLLM"):
-                    service.get_description(fake_image_path) 
+                with pytest.raises(
+                    RequestException, match="Failed to get description from VLLM"
+                ):
+                    service.get_description(fake_image_path)

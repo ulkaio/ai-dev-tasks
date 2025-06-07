@@ -1,1 +1,1 @@
- 
+"""Contextual Photo Search application."""

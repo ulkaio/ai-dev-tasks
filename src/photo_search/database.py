@@ -1,21 +1,19 @@
 """Database management for the photo search application."""
 
-import os
 from pathlib import Path
-from typing import List, Optional
+from typing import List
 
 from sqlalchemy import (
-    create_engine,
-    MetaData,
-    Table,
     Column,
     Integer,
+    MetaData,
     String,
-    select,
+    Table,
+    create_engine,
     insert,
+    select,
     update,
 )
-
 from src.photo_search.photos_service import PhotoInfo
 
 DEFAULT_DB_PATH = Path.home() / ".photo_search" / "photos.db"
@@ -29,6 +27,7 @@ class Database:
 
         Args:
             db_path: The path to the SQLite database file.
+
         """
         self.db_path = db_path
         self.db_path.parent.mkdir(parents=True, exist_ok=True)
@@ -55,6 +54,7 @@ class Database:
 
         Returns:
             True if the photo is indexed, False otherwise.
+
         """
         with self.engine.connect() as connection:
             stmt = select(self.photos).where(self.photos.c.uuid == photo_uuid)
@@ -67,6 +67,7 @@ class Database:
         Args:
             photo: The PhotoInfo object.
             description: The description of the photo.
+
         """
         with self.engine.connect() as connection:
             if self.is_photo_indexed(photo.uuid):
@@ -92,6 +93,7 @@ class Database:
 
         Returns:
             A list of file paths for the matching photos.
+
         """
         # A simple LIKE query for now. This will be improved with more
         # sophisticated semantic search later.
@@ -100,4 +102,4 @@ class Database:
                 self.photos.c.description.like(f"%{query}%")
             )
             results = connection.execute(stmt).fetchall()
-            return [row[0] for row in results] 
+            return [row[0] for row in results]

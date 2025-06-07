@@ -30,7 +30,7 @@ dev = [
 ]
 
 [tool.ruff]
-select = ["E", "F", "I", "W", "C90", "N", "D"]
+select = ["E", "F", "I", "W", "C90", "N"]
 line-length = 88
 src = ["src"]
 
