@@ -26,6 +26,7 @@ def get_project_root() -> Path:
         current_path = current_path.parent
     raise FileNotFoundError("Project root with 'pyproject.toml' not found.")
 
+
 project_root = get_project_root()
 dotenv_path = project_root / ".env"
 load_dotenv(dotenv_path=dotenv_path)
