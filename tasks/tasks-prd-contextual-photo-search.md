@@ -66,9 +66,9 @@
   - [ ] 7.2 Implement unit tests for `vllm_service.py`.
   - [ ] 7.3 Implement unit tests for `database.py`.
 
-- [ ] **8.0 CI/CD**
-  - [ ] 8.1 Implement GitHub Actions for CI/CD.
-  - [ ] 8.2 Add project to GitHub Actions.
+- [x] **8.0 CI/CD**
+  - [x] 8.1 Implement GitHub Actions for CI/CD.
+  - [x] 8.2 Add project to GitHub Actions.
 
 - [ ] **9.0 Deployment**
   - [ ] 9.1 Implement deployment process.
